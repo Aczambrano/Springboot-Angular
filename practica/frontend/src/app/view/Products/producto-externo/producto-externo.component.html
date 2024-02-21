@@ -1,0 +1,16 @@
+<div class="contenedor">
+  <form class="formulario">
+    <!-- Información de la institución -->
+    <div class="columna-unico">
+      
+      <div class="input-container">
+        <label for="productos">Seleccionar Producto:</label>
+        <select id="productos" [(ngModel)]="productoSeleccionado" [ngModelOptions]="{ standalone: true }">
+          <option *ngFor="let producto of productpexternoArray" [value]="producto.id">{{ producto.title }}</option>
+        </select>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+    <button mat-raised-button color="warn" (click)="cancelar(true)">Cancelar</button>
+  </form>
+</div>

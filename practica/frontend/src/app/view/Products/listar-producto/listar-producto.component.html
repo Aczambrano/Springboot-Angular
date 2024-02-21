@@ -1,0 +1,103 @@
+<app-toolbar></app-toolbar>
+<div *ngIf="isLogged; else loggedOut">
+  <div class="container">
+
+    <h2  class="nombre">Bienvenido {{nombre}} {{apellido}}</h2>
+    <img class="imagen-redonda" [src]="foto" alt="Imagen">
+  </div>
+  <button *ngIf="isAdmin" mat-raised-button color="accent" class="tobones"  (click)="productoExterno()">Importar Producto</button>
+  <button *ngIf="isAdmin" mat-raised-button color="primary" class="tobones"  (click)="agregar()">Agregar Producto</button>
+  
+  <div class="contenedor">
+    <div class="">
+      <mat-form-field>
+        <input matInput (keyup)="filtrar($event)" placeholder="Escribe una palabra que quiera buscar" #input>
+      </mat-form-field>
+    </div>
+  
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+  
+        <!-- ID Column -->
+        <ng-container matColumnDef="Nro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Número </th>
+          <td mat-cell *matCellDef="let i = index"> {{ i+1 }} </td>
+        </ng-container>
+  
+        <!-- Progress Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+          <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+        </ng-container>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+          <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
+        </ng-container>
+  
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+          <td mat-cell *matCellDef="let row"> {{row.cantidad}} </td>
+        </ng-container>
+  
+         <!-- Fruit Column -->
+         <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+          <td mat-cell *matCellDef="let row"> {{row.precio}} </td>
+        </ng-container>
+  
+         <!-- Fruit Column -->
+         <ng-container matColumnDef="marca">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+          <td mat-cell *matCellDef="let row"> {{row.marca}} </td>
+        </ng-container>
+  
+         <!-- Fruit Column -->
+         <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
+          <td mat-cell *matCellDef="let row"> {{row.categoria}} </td>
+        </ng-container>
+  
+         <!-- Fruit Column -->
+         <ng-container matColumnDef="imagen">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
+          <td mat-cell *matCellDef="let row">
+             <img [src]="row.imagen" alt="Imagen" style="width:100px; height: 100px;">
+            </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Acciones">
+          <th mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="isAdmin">
+              Acciones
+            </ng-container>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button *ngIf="isAdmin" mat-button color="primary" (click)="editar(row)">
+              <mat-icon> edit</mat-icon>
+            </button>
+            <button *ngIf="isAdmin" mat-button color="warn" (click)="eliminar(row.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[10, 25, 100]"
+        [length]="cantidad" (page)="paginador($event)" aria-label="Select page">
+      </mat-paginator>
+  
+    </div>
+  </div>
+  
+</div>
+
+<ng-template #loggedOut>
+  <h2>No has iniciado Sesión</h2>
+</ng-template>
