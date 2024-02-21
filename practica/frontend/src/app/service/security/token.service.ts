@@ -52,7 +52,7 @@ export class TokenService {
     }
     const token = this.getToken();
     if (!token) {
-      return false; // Asegúrate de manejar el caso en el que el token sea null
+      return false;
     }
     const payload = token.split('.')[1];
     const payloadDecoded = atob(payload);

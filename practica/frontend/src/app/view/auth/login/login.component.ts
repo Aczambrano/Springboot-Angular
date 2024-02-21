@@ -13,6 +13,7 @@ import { ModalInformacionComponent } from '../../layouts/modal-informacion/modal
 import { LoginUsuario } from 'src/app/model/login';
 import { TokenService } from 'src/app/service/security/token.service';
 import { AuthService } from 'src/app/service/security/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
-    //private toastr: ToastrService,
+    private toastr: ToastrService,
     private fb: FormBuilder,
     private externosService: ExternosService,
     private route: Router,
@@ -63,19 +64,18 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     this.loginUsuario = new LoginUsuario(this.loginForm.value.username,
       this.loginForm.value.password);
+
     this.authService.login(this.loginUsuario).subscribe(
       data => {
-
         this.tokenService.setToken(data.token);
         this.route.navigate(['/crud']);
       },
       err => {
-        //this.errMsj = err.error.message;
-        /*
-        this.toastr.error(this.errMsj, 'Fail', {
+        
+        this.toastr.error(this.errMsj, 'Ingrese Datos Correctos', {
           timeOut: 3000,  positionClass: 'toast-top-center',
-        });*/
-        this.accesoDenegado()
+        });
+        //this.accesoDenegado()
       }
     );
   }

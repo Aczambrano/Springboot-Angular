@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { Products } from 'src/app/model/products';
 import { ProductsService } from 'src/app/service/products.service';
 
@@ -23,6 +24,8 @@ export class AgregarProductoComponent implements OnInit {
   products: Products
   constructor(private formBuilder: FormBuilder,
     private productsService: ProductsService,
+    private toastr: ToastrService,
+    
     private dialogRef: MatDialogRef<AgregarProductoComponent>) { 
       this.products = new Products();
     }
@@ -53,7 +56,6 @@ export class AgregarProductoComponent implements OnInit {
   guardar() {
     if (this.myForm.valid  && !this.enviarSolicitud) {
       this.enviarSolicitud = true;
-
       // Procesar los datos del formulario
       this.products.nombre = this.myForm.value.nombre;
       this.products.descripcion = this.myForm.value.descripcion;
@@ -64,9 +66,12 @@ export class AgregarProductoComponent implements OnInit {
       this.products.imagen = this.myForm.value.imagen
       console.log("enviado", this.products)
       
+
       this.productsService.guardar(this.products)
         .subscribe(() => {
-          console.log("enviado", this.products)
+          this.toastr.success("", 'Datos Agregados Correctamente', {
+            timeOut: 3000,  positionClass: 'toast-bottom-left',
+          });
           // Emitir una notificación para actualizar el listado de componentes
           return this.obtenerDatosProducto();
         });

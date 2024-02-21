@@ -13,6 +13,7 @@ import { ProductoExterno } from 'src/app/model/productoExterno';
 import { ProductoExternoComponent } from '../producto-externo/producto-externo.component';
 import { ActivatedRoute } from '@angular/router';
 import { TokenService } from 'src/app/service/security/token.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-producto',
@@ -61,6 +62,7 @@ export class ListarProductoComponent implements OnInit {
   constructor(private productsService: ProductsService,
     private dialog: MatDialog,
     private router: ActivatedRoute,
+    private toastr: ToastrService,
     private tokenService: TokenService,
 
     ) {
@@ -163,6 +165,9 @@ export class ListarProductoComponent implements OnInit {
           () => {
             // Manejar la eliminación exitosa
             console.log('Registro eliminado correctamente');
+            this.toastr.error("", 'Datos Eliminados Correctamente', {
+              timeOut: 3000,  positionClass: 'toast-bottom-left',
+            });
             this.obtenerDatosProducto(this.indicePaginacion, this.cantidadPaginacion);
           },
           (error) => {

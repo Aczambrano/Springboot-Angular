@@ -30,6 +30,7 @@ import { ProductoExternoComponent } from './view/Products/producto-externo/produ
 import { LoginComponent } from './view/auth/login/login.component';
 import { ModalInformacionComponent } from './view/layouts/modal-informacion/modal-informacion.component';
 import { InterceptorService } from './service/security/interceptor.service';
+import { ToastrModule } from 'ngx-toastr';
 
 /*Modulo principal donde importamos nuestros componentes y algunos
 otros componentes externos*/ 
@@ -50,6 +51,7 @@ otros componentes externos*/
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,

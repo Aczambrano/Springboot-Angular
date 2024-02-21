@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 import { Products } from 'src/app/model/products';
 import { ProductsService } from 'src/app/service/products.service';
@@ -24,6 +25,8 @@ export class EditarProductoComponent implements OnInit {
   products: Products
   constructor(private formBuilder: FormBuilder,
     private productsService: ProductsService,
+    private toastr: ToastrService,
+
     private dialogRef: MatDialogRef<EditarProductoComponent>,
     
     @Inject(MAT_DIALOG_DATA) private data: Products
@@ -82,6 +85,9 @@ export class EditarProductoComponent implements OnInit {
       this.productsService.modificar(this.products.id,this.products)
         .subscribe(() => {
           console.log("enviado", this.products)
+          this.toastr.success("", 'Datos Agregados Correctamente', {
+            timeOut: 3000,  positionClass: 'toast-bottom-left',
+          });
           // Emitir una notificación para actualizar el listado de componentes
           return this.obtenerDatosProducto();
         });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { ProductoExterno } from 'src/app/model/productoExterno';
 import { Products } from 'src/app/model/products';
 import { ProductsService } from 'src/app/service/products.service';
@@ -30,6 +31,8 @@ export class ProductoExternoComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private productsService: ProductsService,
+    private toastr: ToastrService,
+
     private dialogRef: MatDialogRef<ProductoExternoComponent>) {
     this.productos = new Products();
     this.productpexternoArray = [];
@@ -74,6 +77,9 @@ export class ProductoExternoComponent implements OnInit {
         };
                 this.productsService.guardar(productoParaGuardar)
                   .subscribe(() => {
+                    this.toastr.success("", 'Datos Agregados Correctamente', {
+                      timeOut: 3000,  positionClass: 'toast-bottom-left',
+                    });
                     // Emitir una notificación para actualizar el listado de componentes
                     return this.obtenerDatosProducto();
                   });

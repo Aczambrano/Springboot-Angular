@@ -13,7 +13,7 @@ export class LoginGuardsService implements CanActivate {
     }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
     if(this.tokenService.isLogged()){
-      this.router.navigate(['/'])
+      this.router.navigate(['/crud'])
       return false;
     }
     return true;

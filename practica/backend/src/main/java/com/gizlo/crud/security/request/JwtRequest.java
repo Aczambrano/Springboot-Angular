@@ -15,13 +15,5 @@ import java.util.Collection;
 @NoArgsConstructor
 public class JwtRequest {
     private String token;
-    private String bearer = "Bearer";
-    private String nombreUsuario;
-    private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtRequest(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
-        this.token = token;
-        this.nombreUsuario = nombreUsuario;
-        this.authorities = authorities;
-    }
 }
