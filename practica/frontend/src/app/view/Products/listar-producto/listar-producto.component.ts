@@ -47,7 +47,6 @@ export class ListarProductoComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   isLogged = false;
-  roles: string[];
   isAdmin = false;
   products: Products[];
   productosExternos: ProductoExterno[];
@@ -78,12 +77,8 @@ export class ListarProductoComponent implements OnInit {
       this.isLogged = false;
     }
 
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach(rol => {
-      if(rol == 'ROLE_ADMIN'){
-        this.isAdmin = true;
-      }
-    })
+    this.isAdmin = this.tokenService.isAdmin();
+    
  /*aqui pasamos por rutas algunos parametros del usuario*/
     this.router.queryParams.subscribe(params => {
       this.nombre = params['nombre'];

@@ -30,12 +30,9 @@ export class LoginComponent implements OnInit {
   usersLista: { users: User[] };
   loginForm: FormGroup;
 
-  isLogged = false;
-  isLoginFail = false;
   loginUsuario: LoginUsuario;
   nombreUsuario: string;
   password: string;
-  roles: string[] = [];
   errMsj: string;
 
 
@@ -53,12 +50,7 @@ export class LoginComponent implements OnInit {
   /*meotodo que nos permite cargar todo lo mencionado dentro de este cuando se inicia 
   el componente*/
   ngOnInit(): void {
-    if(this.tokenService.getToken()){
-      this.isLogged = true;
-      this.isLoginFail = false;
-      this.roles = this.tokenService.getAuthorities();
-    }
-
+    
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -73,26 +65,16 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.password);
     this.authService.login(this.loginUsuario).subscribe(
       data => {
-        this.isLogged = true;
 
         this.tokenService.setToken(data.token);
-        this.tokenService.setUserName(data.nombreUsuario);
-        this.tokenService.setAuthorities(data.authorities);
-        this.roles = data.authorities;
-        /*
-        this.toastr.success('Bienvenido ' + data.nombreUsuario, 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });*/
         this.route.navigate(['/crud']);
       },
       err => {
-        this.isLogged = false;
         //this.errMsj = err.error.message;
         /*
         this.toastr.error(this.errMsj, 'Fail', {
           timeOut: 3000,  positionClass: 'toast-top-center',
         });*/
-        console.log(err );
         this.accesoDenegado()
       }
     );

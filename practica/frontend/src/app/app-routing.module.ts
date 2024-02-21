@@ -5,14 +5,15 @@ import { ListarProductoComponent } from './view/Products/listar-producto/listar-
 import { LoginComponent } from './view/auth/login/login.component';
 import { RegistroComponent } from './view/auth/registro/registro.component';
 import { GuardsService } from './service/security/guards.service';
+import { LoginGuardsService } from './service/security/login-guards.service';
 
 
   
  /*Manejo de rutas de nuestra aplicacion web  */
 
 const routes: Routes = [
-  { path: 'registro', component: RegistroComponent},
-  { path: 'login', component: LoginComponent },
+  //{ path: 'registro', component: RegistroComponent, canActivate:[LoginGuardsService]},
+  { path: 'login', component: LoginComponent , canActivate:[LoginGuardsService]},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'crud', component: ListarProductoComponent, canActivate: [GuardsService],
    data: { expectedRol: ['admin', 'user'] }  },
