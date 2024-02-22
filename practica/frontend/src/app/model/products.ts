@@ -8,4 +8,5 @@ export class Products {
     marca:string;
     categoria:string;
     imagen:string;
+    estado: string;
 }

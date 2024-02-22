@@ -64,6 +64,7 @@ export class AgregarProductoComponent implements OnInit {
       this.products.marca = this.myForm.value.marca;
       this.products.categoria = this.myForm.value.categoria;
       this.products.imagen = this.myForm.value.imagen
+      this.products.estado =  'a'
       console.log("enviado", this.products)
       
 
@@ -83,7 +84,7 @@ export class AgregarProductoComponent implements OnInit {
     */
 
   obtenerDatosProducto() {
-    this.productsService.listar().subscribe(
+    this.productsService.listarActivos().subscribe(
       p => {
         this.productsService.productoActualizar.next(p);
       },

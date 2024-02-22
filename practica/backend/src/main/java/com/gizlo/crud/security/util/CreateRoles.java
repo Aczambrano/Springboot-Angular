@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * UNA VEZ CREADOS SE DEBERÁ ELIMINAR O BIEN COMENTAR EL CÓDIGO
  *
  */
-/*
+
 @Component
 public class CreateRoles implements CommandLineRunner {
 
@@ -28,4 +28,4 @@ public class CreateRoles implements CommandLineRunner {
          rolService.save(rolUser);
 
     }
-}*/
+}

@@ -46,6 +46,17 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
+
+    @GetMapping("/usuariosExternos")
+    public ResponseEntity<String> consumirYGuardarUsuarios() {
+        try {
+            usuarioService.consumirYGuardarUsuarios();
+            return new ResponseEntity<>("Usuarios guardados correctamente", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al guardar usuarios: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody RegistroUsuarioRequest nuevoUsuario,
                                    BindingResult bindingResult){
@@ -66,6 +77,8 @@ public class AuthController {
         usuarioService.save(usuario);
         return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
     }
+
+
 
     @PostMapping("/login")
     public ResponseEntity<JwtRequest> login(@Valid @RequestBody LoginRequest loginUsuario, BindingResult bindingResult){

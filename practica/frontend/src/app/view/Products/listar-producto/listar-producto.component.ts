@@ -180,6 +180,29 @@ export class ListarProductoComponent implements OnInit {
 
   }
 
+
+  deshabilitar(id: number) {
+    this.openModalDelete('¿Desea Eliminar el Registro?').subscribe(result => {
+      if (result) {
+        this.productsService.deshabilitar(id).subscribe(
+          () => {
+            // Manejar la eliminación exitosa
+            console.log('Registro eliminado correctamente');
+            this.toastr.error("", 'Datos Eliminados Correctamente', {
+              timeOut: 3000,  positionClass: 'toast-bottom-left',
+            });
+            this.obtenerDatosProducto(this.indicePaginacion, this.cantidadPaginacion);
+          },
+          (error) => {
+            // Manejar el error en caso de que ocurra
+            console.error('Error al eliminar el registro', error);
+          }
+        );
+      }
+    });
+
+  }
+
   /*metodo para filtrar la tabla mediante un input
     */
 

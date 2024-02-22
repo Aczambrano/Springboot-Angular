@@ -1,5 +1,6 @@
 package com.gizlo.crud.entity;
 
+import com.gizlo.crud.request.ProductsRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +25,28 @@ public class Products {
     private String marca;
     private String categoria;
     private String imagen;
+    private Character estado;
+
+    public Products(ProductsRequest data) {
+        this.nombre = data.getNombre();
+        this.descripcion = data.getDescripcion();
+        this.cantidad= data.getCantidad();
+        this.precio = data.getPrecio();
+        this.marca = data.getMarca();
+        this.categoria = data.getCategoria();
+        this.imagen = data.getImagen();
+        this.estado = data.getEstado();
+    }
+
+    public Products(Products data) {
+        this.nombre = data.getNombre();
+        this.descripcion = data.getDescripcion();
+        this.cantidad= data.getCantidad();
+        this.precio = data.getPrecio();
+        this.marca = data.getMarca();
+        this.categoria = data.getCategoria();
+        this.imagen = data.getImagen();
+        this.estado = data.getEstado();
+    }
+
 }

@@ -19,9 +19,10 @@ import { ProductsService } from 'src/app/service/products.service';
 
 export class ProductoExternoComponent implements OnInit {
 
-    //declaracion de variables
+  //declaracion de variables
 
-
+  indicePaginacion = 0;
+  cantidadPaginacion = 10;
   productoSeleccionado: number;
   myForm: FormGroup;
   selectedPais: string
@@ -37,15 +38,15 @@ export class ProductoExternoComponent implements OnInit {
     this.productos = new Products();
     this.productpexternoArray = [];
   }
- /*meotodo que nos permite cargar todo lo mencionado dentro de este cuando se inicia 
-  el componente*/
+  /*meotodo que nos permite cargar todo lo mencionado dentro de este cuando se inicia 
+   el componente*/
   ngOnInit() {
     this.initializeForm()
     //this.obtenerDatosPais()
     this.obtenerDatosProductoExterno()
   }
   initializeForm() {
-  
+
     this.myForm = this.formBuilder.group({
       id: ['', Validators.required]
     });
@@ -53,8 +54,8 @@ export class ProductoExternoComponent implements OnInit {
 
   enviarSolicitud = false;
 
-    /*metodo que nos permite guardar los datos del formulario siempre
-      y cuando el formulario sea valido*/
+  /*metodo que nos permite guardar los datos del formulario siempre
+    y cuando el formulario sea valido*/
   guardar() {
     if (!this.enviarSolicitud) {
       this.enviarSolicitud = true;
@@ -64,9 +65,9 @@ export class ProductoExternoComponent implements OnInit {
 
       if (productoSeleccionado2) {
         // Puedes procesar o modificar el producto seleccionado antes de guardarlo
-       
-        const productoParaGuardar:Products = {
-          id:0,
+
+        const productoParaGuardar: Products = {
+          id: 0,
           nombre: productoSeleccionado2.title,
           descripcion: productoSeleccionado2.description,
           cantidad: productoSeleccionado2.stock,
@@ -74,25 +75,27 @@ export class ProductoExternoComponent implements OnInit {
           marca: productoSeleccionado2.brand,
           categoria: productoSeleccionado2.category,
           imagen: productoSeleccionado2.thumbnail,
+          estado: 'a'
         };
-                this.productsService.guardar(productoParaGuardar)
-                  .subscribe(() => {
-                    this.toastr.success("", 'Datos Agregados Correctamente', {
-                      timeOut: 3000,  positionClass: 'toast-bottom-left',
-                    });
-                    // Emitir una notificación para actualizar el listado de componentes
-                    return this.obtenerDatosProducto();
-                  });
-                this.cancelar(true);
+        this.productsService.guardar(productoParaGuardar)
+          .subscribe(() => {
+            this.toastr.success("", 'Datos Agregados Correctamente', {
+              timeOut: 3000, positionClass: 'toast-bottom-left',
+            });
+            // Emitir una notificación para actualizar el listado de componentes
+            return this.obtenerDatosProducto();
+            
+          });
+        this.cancelar(true);
       }
     }
   }
 
-   /*metodo que nos permite obtener los datos de la tabla productos
-    */
+  /*metodo que nos permite obtener los datos de la tabla productos
+   */
 
   obtenerDatosProducto() {
-    this.productsService.listar().subscribe(
+    this.productsService.listarActivos().subscribe(
       p => {
         this.productsService.productoActualizar.next(p);
       },
@@ -102,21 +105,21 @@ export class ProductoExternoComponent implements OnInit {
     );
   }
 
-   /*metodo que nos permite obtener los datos de la api externa
-   mediante el id
-    */
+  /*metodo que nos permite obtener los datos de la api externa
+  mediante el id
+   */
   buscarProductoPorId(id: number): ProductoExterno | undefined {
-   
-    for(let a of this.productosExternosLista.products){
 
-      if(a.id==id){
-            return a;
-        }
+    for (let a of this.productosExternosLista.products) {
+
+      if (a.id == id) {
+        return a;
+      }
     }
     return undefined;
   }
 
-  
+
   /*metodo que nos permite obtener los datos de la api externa de productos
     */
   obtenerDatosProductoExterno() {
@@ -131,10 +134,10 @@ export class ProductoExternoComponent implements OnInit {
     );
   }
 
-    
- /*metodo que nos permite llamar a otro componente el cual 
- tiene un pequeño formulario donde te pregunta si cancelas o no
-    */
+
+  /*metodo que nos permite llamar a otro componente el cual 
+  tiene un pequeño formulario donde te pregunta si cancelas o no
+     */
   cancelar(confirmacion: boolean) {
 
     this.dialogRef.close(confirmacion);

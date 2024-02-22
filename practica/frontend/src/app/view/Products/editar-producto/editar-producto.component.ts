@@ -40,6 +40,7 @@ export class EditarProductoComponent implements OnInit {
       this.products.marca = this.data.marca;
       this.products.categoria = this.data.categoria;
       this.products.imagen = this.data.imagen;
+      this.products.estado =  'a'
      }
  /*meotodo que nos permite cargar todo lo mencionado dentro de este cuando se inicia 
   el componente*/
@@ -98,7 +99,7 @@ export class EditarProductoComponent implements OnInit {
 /*metodo que nos permite obtener los datos de la tabla productos
     */
   obtenerDatosProducto() {
-    this.productsService.listar().subscribe(
+    this.productsService.listarActivos().subscribe(
       p => {
         this.productsService.productoActualizar.next(p);
       },

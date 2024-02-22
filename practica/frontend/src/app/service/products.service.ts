@@ -23,6 +23,9 @@ export class ProductsService {
   listar(): Observable<Products[]> {
     return this.httpClient.get<Products[]>(`${this.url + "/listar"}`);
   }
+  listarActivos(): Observable<Products[]> {
+    return this.httpClient.get<Products[]>(`${this.url + "/listarActivos"}`);
+  }
   buscarProductosExternos(): Observable<any> {
     return this.httpClient.get<any>(`${this.urlExterna + "/products"}`);
   }
@@ -40,4 +43,7 @@ export class ProductsService {
     return this.httpClient.delete(`${this.url}/eliminar/${id}`, { responseType: 'text' });
   }
 
+  deshabilitar(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.url}/deshabilitar/${id}`, { responseType: 'text' });
+  }
 }
